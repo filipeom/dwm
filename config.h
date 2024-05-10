@@ -21,25 +21,38 @@ static const int systraypinningfailfirst =
 static const int showsystray = 1; /* 0 means no systray */
 static const int showbar = 1;     /* 0 means no bar */
 static const int topbar = 1;      /* 0 means bottom bar */
-static const int user_bh = 22; /* 0 means that dwm will calculate bar height, >=
+static const int user_bh = 0; /* 0 means that dwm will calculate bar height, >=
                                   1 means dwm will user_bh as bar height */
-static const char *fonts[] = {"monospace:size=12"};
-static const char dmenufont[] = "monospace:size=12";
-static const char background[] = "#f6f2ee";
-static const char foreground[] = "#3d2b5a";
-static const char inactive_border[] = "#aab0ad";
-static const char selection_background[] = "#e7d2be";
-static const char selection_foreground[] = "#3d2b5a";
-static const char selection_border[] = "#2848a9";
+static const char *fonts[] = {"CaskaydiaCove NF:size=13"};
+static const char dmenufont[] = "CaskaydiaCove NF:size=13";
+static const char bg[] = "#f6f2ee";
+static const char fg[] = "#3d2b5a";
+static const char inactive[] = "#888888";
+static const char bg2[] = "#e7d2be";
+static const char fg2[] = "#3d2b5a";
+static const char active[] = "#ff0000";
 static const char *colors[][3] = {
     /*               fg         bg         border   */
-    [SchemeNorm] = {foreground, background, inactive_border},
-    [SchemeSel] = {selection_foreground, selection_background,
-                   selection_border},
+    [SchemeNorm] = {fg, bg, inactive},
+    [SchemeSel] = {fg2, bg2, active},
+    [SchemeStatus] = {fg, bg, NULL}, // Statusbar right {text,background,not
+                                     // used but cannot be empty}
+    [SchemeTagsSel] = {fg, bg,
+                       NULL}, // Tagbar left selected {text,background,not
+                              // used but cannot be empty}
+    [SchemeTagsNorm] = {inactive, bg,
+                        NULL}, // Tagbar left unselected {text,background,not
+                               // used but cannot be empty}
+    [SchemeInfoSel] = {fg, bg,
+                       NULL}, // infobar middle  selected {text,background,not
+                              // used but cannot be empty}
+    [SchemeInfoNorm] = {inactive, bg,
+                        NULL}, // infobar middle  unselected
+                               // {text,background,not used but cannot be empty}
 };
 
 /* tagging */
-static const char *tags[] = {"1", "2", "3", "4", "5", "6", "7", "www", "mail"};
+static const char *tags[] = {"\ue6b1", "2", "3", "4", "5", "6", "7", "www", "mail"};
 
 static const Rule rules[] = {
     /* xprop(1):
@@ -82,20 +95,9 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] =
     "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = {"dmenu_run",
-                                 "-m",
-                                 dmenumon,
-                                 "-fn",
-                                 dmenufont,
-                                 "-nb",
-                                 background,
-                                 "-nf",
-                                 foreground,
-                                 "-sb",
-                                 selection_background,
-                                 "-sf",
-                                 selection_foreground,
-                                 NULL};
+static const char *dmenucmd[] = {"dmenu_run", "-m",  dmenumon, "-fn", dmenufont,
+                                 "-nb",       bg,    "-nf",    fg,    "-sb",
+                                 bg2,         "-sf", fg2,      NULL};
 static const char *termcmd[] = {"kitty", NULL};
 // static const char *musiccmd[] = { "kitty", "-e", "ncmpcpp", NULL };
 static const char *wancmd[] = {"toggle-wifi", NULL};
